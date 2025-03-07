@@ -17,6 +17,8 @@ echo "Hi deploying project from jenkins"
 stage('test'){
 steps{
  echo "Hi Testing project from jenkins"
+ bat "mvn clean install"
+ 
 }
 }
 
