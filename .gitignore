@@ -1,0 +1,11 @@
+# Ignore target, test-output, report, and log directories
+target/
+test-output/
+report/
+log/
+ReferenceReport.html
+ScreenshotsPass/
+ScreenshotsFail/
+src/
+application.log
+
