@@ -4,9 +4,9 @@ agent any
 parameters {
  // Define the TestType parameter to choose which test type to run
         choice(name: 'TestType', choices: ['smoke', 'regression', 'sanity', 'none'], description: 'Select Test Type')
-    }
+}
+    
 stages{
-
 stage('build'){
 steps{
 echo "Hi building project from jenkins"
@@ -21,6 +21,7 @@ echo "Hi deploying project from jenkins"
 
 stage('test'){
 steps{
+script {
  echo "Hi Testing project from jenkins"
  //bat "mvn clean install"
                     // Determine the TestNG XML file to run based on the TestType parameter
@@ -40,6 +41,7 @@ steps{
                     echo "Running tests with TestNG suite: ${testNgFile}"
                     bat command  // Run the tests with the selected TestNG XML file
  
+}
 }
 }
 
