@@ -46,4 +46,38 @@ script {
 }
 
 }
+post {
+        always {
+            // Archive the generated ExtentReport.html file
+            archiveArtifacts allowEmptyArchive: true, artifacts: '**/ExtentReports/Report.html,**/application.log' , onlyIfSuccessful: true
+
+            // Optionally, send an email with the report attached
+            //mail to: 'recipient@example.com', 
+                 //subject: "Test Execution Report - ${currentBuild.currentResult}", 
+                 //body: "Please find the attached Extent Report for the latest build.", 
+                 //attachmentsPattern: '**/ExtentReports/Report.html'
+                 
+            // Display the Extent report as an HTML page in Jenkins
+            publishHTML(target: [
+                reportName: 'Extent Report',
+                reportDir: 'ExtentReports', // Directory containing the HTML report
+                reportFiles: 'Report.html', // Name of the HTML file
+                alwaysLinkToLastBuild: true
+            ])
+        }
+        
+        //success {
+            // Email notification on success
+            //mail to: 'your-email@example.com',
+                 //subject: "Build #${env.BUILD_NUMBER} - ${env.JOB_NAME} - SUCCESS",
+                 //body: "Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} has completed successfully.\n\nCheck the report at: ${env.BUILD_URL}/artifact/target/ExtentReports/ExtentReport.html"
+        //}
+        
+        //failure {
+            // Email notification on failure
+            //mail to: 'your-email@example.com',
+                 //subject: "Build #${env.BUILD_NUMBER} - ${env.JOB_NAME} - FAILED",
+                 //body: "Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} has failed. Please check the logs and reports.\n\nCheck the report at: ${env.BUILD_URL}/artifact/target/ExtentReports/ExtentReport.html"
+        //}
+    }
 }
